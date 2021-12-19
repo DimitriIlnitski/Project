@@ -1,18 +1,13 @@
 const express = require('express')
 const app = express()
-const userController = require('./controllers/userController.js')
-const homeController = require('./controllers/homeController.js')
 
-const userRouter = express.Router()
-const homeRouter = express.Router()
+const userRouter = require('./routes/userRouter.js')
+const homeRouter = require('./routes/homeRouter.js')
 
-userRouter.use('/create', userController.addUser)
-userRouter.use('/', userController.getUsers)
+app.set('view engine', 'hbs')
+app.use(express.urlencoded({ extended: false }))
 
 app.use('/users', userRouter)
-
-homeRouter.get('/about', homeController.about)
-homeRouter.get('/', homeController.index)
 app.use('/', homeRouter)
 
 app.use(function (request, response, next) {

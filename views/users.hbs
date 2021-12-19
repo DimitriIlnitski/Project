@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List of users</title>
+</head>
+<body>
+    
+    <a href="/users/create">Add user</a>
+    <h1>List of users</h1>
+    <table>
+        <tr><th>Name</th><th>Age</th></tr>
+        {{#each users}}
+            <tr><td>{{this.name}}</td><td>{{this.age}}</td></tr>
+            {{/each}}
+    </table>
+</body>
+</html>

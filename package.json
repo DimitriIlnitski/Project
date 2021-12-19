@@ -3,6 +3,7 @@
     "gulp": "^4.0.2"
   },
   "dependencies": {
-    "express": "^4.17.2"
+    "express": "^4.17.2",
+    "hbs": "^4.2.0"
   }
 }
