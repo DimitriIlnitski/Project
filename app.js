@@ -1,4 +1,5 @@
 const express = require('express')
+const mongoose = require('mongoose')
 const app = express()
 
 const userRouter = require('./routes/userRouter.js')
@@ -14,4 +15,13 @@ app.use(function (request, response, next) {
   response.status(404).send('Not found')
 })
 
-app.listen(3000)
+mongoose.connect(
+  'mongodb://localhost:27017/usersdb',
+  { useUnifiedTopology: true },
+  function (err) {
+    if (err) return console.log(err)
+    app.listen(3000, function () {
+      console.log('Server awaits for connection...')
+    })
+  }
+)
