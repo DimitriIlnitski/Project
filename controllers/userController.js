@@ -10,7 +10,7 @@ exports.getUsers = function (request, response) {
       return response.sendStatus(400)
     }
     response.render('users.hbs', {
-      users: User.getAll(),
+      users: allUsers,
     })
   })
 }
@@ -19,7 +19,7 @@ exports.postUser = function (request, response) {
   if (!request.body) return response.sendStatus(400)
   const username = request.body.name
   const userage = request.body.age
-  const user = new User({ name: username, age: userAge })
+  const user = new User({ name: username, age: userage })
   user.save(function (err) {
     if (err) return console.log(err)
     response.redirect('/users')
