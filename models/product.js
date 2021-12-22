@@ -4,11 +4,12 @@ const Schema = mongoose.Schema
 
 const productSchema = new Schema({
   name: String,
-  ram: Number,
-  color: String,
+  volume: Number,
+  material: String,
   price: Number,
 })
 
+module.exports = mongoose.model('Product', productSchema)
 /*
 String newFileName = "my-image";
 File imageFile = new File("/users/victor/images/image.png");

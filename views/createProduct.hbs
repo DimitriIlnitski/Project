@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+<h1>Add product</h1>
+<form action="postProduct" method="post">
+    <label>Name</label>
+    <input name="name"/><br><br>
+    <label>Volume</label>
+    <input name="volume" type="number" min='1' max='600'/><br><br>
+    <label>Material</label>
+    <input name="material"/><br><br>
+    <label>Price</label>
+    <input name="price"/><br><br>
+    <input type="submit" value="Send" />
+</form>
+<a href="/products">To list of products</a>
+
+
+</body>
+</html>
