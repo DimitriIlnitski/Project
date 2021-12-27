@@ -41,17 +41,18 @@ exports.editProduct = function (request, response) {
 exports.removeProduct = function (request, response) {
   if (!request.body) return response.status(400)
   productName = request.body.name
+  console.log(productName)
   Product.deleteOne({ name: productName }, function (err, allProducts) {
     if (err) {
       console.log(err)
       response.status(400)
     }
-    response.render('products.hbs', { products: allProducts })
+    response.redirect('/products')
   })
 }
 
 //Сотрування по ціні по зростанню - додати кнопку (можливо додати спадання)
-exports.removeProduct = function (request, response) {
+exports.sortProduct = function (request, response) {
   if (!request.body) return response.status(400)
   Product.find().sort({ price: 1 }, function (err, allProducts) {
     if (err) {
@@ -63,7 +64,7 @@ exports.removeProduct = function (request, response) {
 }
 
 //Пошук по імені (додати промпт)
-exports.removeProduct = function (request, response) {
+exports.searchProduct = function (request, response) {
   if (!request.body) return response.status(400)
   productName = request.body.name
   Product.find({ name: productName }, function (err, allProducts) {

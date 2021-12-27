@@ -11,9 +11,23 @@
 <body>
 
     {{>menu}}
-
-    {{{body}}}
-
+<div class="row">
+<div class="col s12 m4 l3"> 
+  <div class="switch">
+    <label>
+      Off
+      <input type="checkbox">
+      <span class="lever"></span>
+      On
+    </label>
+  </div>   
+  
+<a class="waves-effect waves-light btn">Розрахувати</a>
+</div>
+<div class="col s12 m8 l9"> 
+{{{body}}}
+</div>
+</div>
     {{>footer}}
 
 </body>
