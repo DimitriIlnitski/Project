@@ -40,8 +40,9 @@ exports.editProduct = function (request, response) {
 //Видалення продукту - реалізувати видалення через id - додати кнопку
 exports.removeProduct = function (request, response) {
   if (!request.body) return response.status(400)
-  // productName = request.body.name
-  // Product.deleteOne({ name: productName })
+  productName = request.body.name
+  console.log(productName)
+  Product.deleteOne({ name: productName })
   response.redirect('/products')
 }
 
