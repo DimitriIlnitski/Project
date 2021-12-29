@@ -4,7 +4,7 @@ const expressHbs = require('express-handlebars')
 const hbs = require('hbs')
 const app = express()
 
-app.use(express.static('css'))
+app.use(express.static('public'))
 
 const userRouter = require('./routes/userRouter.js')
 const homeRouter = require('./routes/homeRouter.js')
@@ -14,7 +14,6 @@ app.set('view engine', 'hbs')
 app.set('view options', { layout: 'layouts/layout' })
 hbs.registerPartials(__dirname + '/views/partials')
 app.use(express.urlencoded({ extended: false }))
-
 
 app.use('/products', productRouter)
 app.use('/users', userRouter)

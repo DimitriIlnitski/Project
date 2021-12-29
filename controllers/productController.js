@@ -4,81 +4,94 @@ exports.addProduct = function (request, response) {
   response.render('createProduct.hbs')
 }
 
-//Редагування продукту - реалізувати видалення через id - додати кнопку
 exports.editProduct = function (request, response) {
   if (!request.body) return response.status(400)
-  productName = request.body.name
-  productVolume = request.body.volume
-  productMaterial = request.body.material
-  productPrice = request.body.price
-  Product.updateOne({ name: productName }, function (err, allProducts) {
-    if (err) {
-      console.log(err)
-      response.status(400)
-    } else {
-      if (productName === null || productName === null)
-        $set: {
-          name: productName
-        }
-      if (productVolume === null || productVolume === null)
-        $set: {
-          volume: productVolume
-        }
-      if (productMaterial === null || productMaterial === null)
-        $set: {
-          name: productMaterial
-        }
-      if (productPrice === null || productPrice === null)
-        $set: {
-          name: productPrice
-        }
-      response.render('products.hbs', { products: allProducts })
-    }
+  const productId = request.body.id
+  Product.findById(productId, function (err, item) {
+    if (err) return console.log(err)
+    response.render('editProduct.hbs', item)
   })
 }
 
-//Видалення продукту - реалізувати видалення через id - додати кнопку
+//Редагування продукту - перестало працювати
+exports.editHandlingProduct = function (request, response) {
+  console.log(request.body)
+  if (!request.body) return response.status(400)
+  const productId = request.body.id
+  const productName = request.body.name
+  const productVolume = request.body.volume
+  const productMaterial = request.body.material
+  const productPrice = request.body.price
+  Product.findByIdAndUpdate(
+    productId,
+    {
+      name: productName,
+      volume: productVolume,
+      material: productMaterial,
+      price: productPrice,
+    },
+    function (err, allProducts) {
+      if (err) {
+        console.log(err)
+        response.status(400)
+      }
+      response.redirect('/products')
+    }
+  )
+}
+
+//Видалення продукту
 exports.removeProduct = function (request, response) {
   if (!request.body) return response.status(400)
-  productName = request.body.name
-  console.log(productName)
-  Product.deleteOne({ name: productName })
+  const productId = request.body.id
+  Product.findByIdAndDelete(productId, function (err, prod) {
+    if (err) return console.log(err)
+    console.log('Видалено продукт:' + prod)
+  })
   response.redirect('/products')
 }
 
-//Сотрування по ціні по зростанню - додати кнопку (можливо додати спадання)
+//Сотрування по ціні по зростанню - довести до ума
 exports.sortProduct = function (request, response) {
+  console.log(request.body)
   if (!request.body) return response.status(400)
-  Product.find().sort({ price: 1 }, function (err, allProducts) {
-    if (err) {
-      console.log(err)
-      response.status(400)
-    }
-    response.render('products.hbs', { products: allProducts })
-  })
+  Product.find({})
+    .sort({ name: 1 })
+    .exec(function (err, allProducts) {
+      if (err) {
+        console.log(err)
+        response.status(400)
+      }
+      response.render('products.hbs', { products: allProducts })
+    })
 }
 
-//Пошук по імені (додати промпт)
+//Пошук по імені
 exports.searchProduct = function (request, response) {
   if (!request.body) return response.status(400)
-  productName = request.body.name
-  Product.find({ name: productName }, function (err, allProducts) {
+  console.log(request.body.name)
+  const productName = request.body.name
+  console.log(productName)
+  Product.find({ name: productName }, function (err, product) {
     if (err) {
       console.log(err)
       response.status(400)
     }
-    response.render('products.hbs', { products: allProducts })
+    response.render('products.hbs', { products: product })
   })
 }
 
 // Розрахунок загального обєму - додати кнопку
 exports.getVolume = function (request, response) {
+  console.log(request.body)
   let cursor = Product.find()
-  let totalVolume = 0
-  while (cursor.hasNext()) {
-    totalVolume += cursor.next()
+  let volume = 0
+  while (cursor.hasNext) {
+    volume += cursor.next()
   }
-  return totalVolume
+  response.render('layout.hbs', {
+    volume: volume,
+  })
 }
 
 exports.getProducts = function (request, response) {
@@ -95,14 +108,14 @@ exports.getProducts = function (request, response) {
 
 exports.postProduct = function (request, response) {
   if (!request.body) return response.status(400)
-  productName = request.body.name
-  productVolume = request.body.volume
-  productMaterial = request.body.material
-  productPrice = request.body.price
+  const productName = request.body.name
+  const productVolume = request.body.volume
+  const productMaterial = request.body.material
+  const productPrice = request.body.price
   const product = new Product({
     name: productName,
-    ram: productVolume,
-    color: productMaterial,
+    volume: productVolume,
+    material: productMaterial,
     price: productPrice,
   })
   product.save(function (err) {

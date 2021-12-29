@@ -7,19 +7,38 @@
           <p>Об'єм:     {{this.volume}}</p>
           <p>Матеріал:  {{this.material}}</p>
           <p>Ціна, грн: {{this.price}}</p>
+          <p id="mongoId" style="display:none">{{this.id}}</p>
         </div>
+
         <div class="card-action">
           <div class="row">
+          
             <div class="col s12 m6">
-          <form action="/products/editProduct" method="post">
-                  <button class="btn waves-effect waves-light" type="submit" name="action">Редагувати</button>
+          <form id="form1" action="/products/editProduct" method="post"> 
+          <input id="data1" form="form1" style="display:none" from="form" name="id"/>
           </form>
+          <button id="edit" form="form1" class="btn waves-effect waves-light" type="submit">Редагувати</button>
+          <script>
+              edit.onclick = function(){
+              let item = document.getElementById('mongoId').innerHTML;
+              document.getElementById('data1').value=item;
+            }
+          </script>
           </div>
+
           <div class="col s12 m6">
-          <form  action="/products/removeProduct" method="post">
-               <button class="btn waves-effect waves-light" type="submit" name="action">Видалити</button>
-          </form>
+            <form id="form2" action="/products/removeProduct" method="post">
+             <input id="data2" style="display:none" from="form2" name="id"/>
+            </form>
+            <button id="remove" form="form2" class="btn waves-effect waves-light" type="submit">Видалити</button>
+          <script>
+              remove.onclick = function(){
+              let item = document.getElementById('mongoId').innerHTML;
+              document.getElementById('data2').value=item;
+            }
+          </script>
           </div>
+
           </div>
         </div>
       </div>
