@@ -5,15 +5,18 @@ exports.addProduct = function (request, response) {
 }
 
 exports.editProduct = function (request, response) {
+  console.log(request.body)
   if (!request.body) return response.status(400)
   const productId = request.body.id
+  console.log(productId)
   Product.findById(productId, function (err, item) {
     if (err) return console.log(err)
     response.render('editProduct.hbs', item)
   })
 }
 
-//Редагування продукту - перестало працювати
+
+//Редагування продукту
 exports.editHandlingProduct = function (request, response) {
   console.log(request.body)
   if (!request.body) return response.status(400)
@@ -40,6 +43,7 @@ exports.editHandlingProduct = function (request, response) {
   )
 }
 
+
 //Видалення продукту
 exports.removeProduct = function (request, response) {
   if (!request.body) return response.status(400)
@@ -51,12 +55,12 @@ exports.removeProduct = function (request, response) {
   response.redirect('/products')
 }
 
-//Сотрування по ціні по зростанню - довести до ума
+//Сотрування по ціні по зростанню
 exports.sortProduct = function (request, response) {
-  console.log(request.body)
+  let param = request.body.sort;
   if (!request.body) return response.status(400)
   Product.find({})
-    .sort({ name: 1 })
+    .sort({ name: param })
     .exec(function (err, allProducts) {
       if (err) {
         console.log(err)
@@ -81,17 +85,20 @@ exports.searchProduct = function (request, response) {
   })
 }
 
-// Розрахунок загального обєму - додати кнопку
+// Розрахунок загального обєму
 exports.getVolume = function (request, response) {
-  console.log(request.body)
-  let cursor = Product.find()
+  console.log(request)
   let volume = 0
-  while (cursor.hasNext) {
-    volume += cursor.next()
+  function calc(){
+  return Product.
+  find({}).
+  cursor().
+  on('data', function(doc) { volume+=doc.volume; }).
+  on('end', function() { return volume; });
   }
-  response.render('layout.hbs', {
-    volume: volume,
-  })
+  let result = calc();
+  console.log(result)
+  response.render('products.hbs', {final: result})
 }
 
 exports.getProducts = function (request, response) {

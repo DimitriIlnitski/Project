@@ -1,77 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <title>E-shop</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <title>E-shop</title>
 </head>
+
 <body>
 
-    {{>menu}}
-    <main class="main">
-<div class="row">
-<div class="col s12 m4 l3"> 
-  
-  <div class="card-panel">
-      <div class="container col s12">
-        Сортувати
-      </div>
-  <div>
-    <form action="/products/sortProduct" method='post'>
-    <input id="btnInput" type="text" name="sort" value="1">
-    <button id="btn" class="btn waves-effect waves-light" type="submit">Сортувати за зростанням</button>
-    </form>
-    <script>
-      btn.onclick = function(){
-        let attr = document.getElementById('btnInput')
-        let temp= attr.getAttribute('value')
-        if(temp===1){
-        atrr.setAttribute('value', '-1')
-        attr.innerHTML="Сортувати за спаданням"
-        }
-                if(temp===-1){
-        atrr.setAttribute('value', '1')
-        attr.innerHTML="Сортувати за зростанням"
-        }
-      }
-    </script>
-  </div>  
-  </div>
-
-<div class="card-panel">
-  <div class="row">
-<form action="/products/getVolume" method='post'>
-<input id="calcInput" type="text" name="calc" style="display:none" value="1">
-<button class="waves-effect waves-light btn">Розрахувати</button>
-</form>
-</div>
-<div class="row">Загальний обєм складає: {{this.volume}}</div>
-</div>
-
-  <div class="card-panel">
-      <div class="row">
-    <div class="input-field col s9">
-    <form id="mySearch" action="/products/searchProduct" method="post">
-      <input id="search" name="name" type="text" class="validate">
-      <label class="active" for="search">Пошук товару по назві</label>
-    </form>
+  {{>menu}}
+  <main class="main">
     <div class="row">
-    <button id="edit" form="mySearch" class="btn waves-effect waves-light" type="submit">Пошук</button>
-    </div>
-    </div>
-  </div>
-  </div>
+      <div class="col s12 m4 l3">
 
-</div>
-<div class="col s12 m8 l9"> 
-{{{body}}}
-</div>
-</div>
-</main>
-    {{>footer}}
+        <div class="card-panel">
+          <div class="container col s12">
+            Сортувати
+          </div>
+          <div>
+            <form action="/products/sortProduct" method='post'>
+              <input id="btnInput" style="display:none" type="text" name="sort" value="1">
+              <button class="btn waves-effect waves-light" type="submit">Сортувати за
+                зростанням</button>
+            </form>
+          </div>
+          <div>
+            <form action="/products/sortProduct" method='post'>
+              <input id="btnInput" style="display:none" type="text" name="sort" value="-1">
+              <button class="btn waves-effect waves-light" type="submit">Сортувати за
+                спаданням</button>
+            </form>
+          </div>
+        </div>
+
+        <div class="card-panel">
+          <div class="row">
+            <button id="calculate" onclick='calc()' class="waves-effect waves-light btn"
+              type="submit">Розрахувати</button>
+          </div>
+          <div id="resultCalc" class="row">Загальний обєм складає: </div>
+          <script>
+            function calc() {
+              alert('Hallo!')
+              fetch("/products/getVolume").then((response) => {
+                let text = response.text();
+                alert(text)
+                resultCalc.innerHTML + = text;
+              })
+            }
+          </script>
+        </div>
+
+        <div class="card-panel">
+          <div class="row">
+            <div class="input-field col s9">
+              <form id="mySearch" action="/products/searchProduct" method="post">
+                <input id="search" name="name" type="text" class="validate">
+                <label class="active" for="search">Пошук товару по назві</label>
+              </form>
+              <div class="row">
+                <button id="edit" form="mySearch" class="btn waves-effect waves-light" type="submit">Пошук</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="col s12 m8 l9">
+        {{{body}}}
+      </div>
+    </div>
+  </main>
+  {{>footer}}
 
 </body>
+
 </html>
