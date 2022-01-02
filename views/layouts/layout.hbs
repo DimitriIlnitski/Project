@@ -39,18 +39,15 @@
 
         <div class="card-panel">
           <div class="row">
-            <button id="calculate" onclick='calc()' class="waves-effect waves-light btn"
-              type="submit">Розрахувати</button>
+            <form action="/products/getVolume" method='post'>
+              <button id="calculate" onclick='calc()' class="waves-effect waves-light btn"
+                type="submit">Розрахувати</button>
+            </form>
           </div>
-          <div id="resultCalc" class="row">Загальний обєм складає: </div>
+          <div id="resultCalc" class="row">{{this.final}}</div>
           <script>
             function calc() {
-              alert('Hallo!')
-              fetch("/products/getVolume").then((response) => {
-                let text = response.text();
-                alert(text)
-                resultCalc.innerHTML + = text;
-              })
+
             }
           </script>
         </div>

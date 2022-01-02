@@ -87,18 +87,17 @@ exports.searchProduct = function (request, response) {
 
 // Розрахунок загального обєму
 exports.getVolume = function (request, response) {
-  console.log(request)
   let volume = 0
   function calc(){
-  return Product.
-  find({}).
-  cursor().
-  on('data', function(doc) { volume+=doc.volume; }).
-  on('end', function() { return volume; });
-  }
-  let result = calc();
-  console.log(result)
-  response.render('products.hbs', {final: result})
+    return Product.
+    find({}).
+    cursor().
+    on('data', function(doc) { volume+=doc.volume; }).
+    on('end', function() { console.log(volume);});
+    }
+    calc();
+  /*console.log(volume); */
+  response.render('products.hbs', {final: volume})
 }
 
 exports.getProducts = function (request, response) {
