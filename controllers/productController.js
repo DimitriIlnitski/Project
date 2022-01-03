@@ -15,7 +15,6 @@ exports.editProduct = function (request, response) {
   })
 }
 
-
 //Редагування продукту
 exports.editHandlingProduct = function (request, response) {
   console.log(request.body)
@@ -42,7 +41,6 @@ exports.editHandlingProduct = function (request, response) {
     }
   )
 }
-
 
 //Видалення продукту
 exports.removeProduct = function (request, response) {
@@ -88,16 +86,16 @@ exports.searchProduct = function (request, response) {
 // Розрахунок загального обєму
 exports.getVolume = function (request, response) {
   let volume = 0
-  function calc(){
-    return Product.
-    find({}).
-    cursor().
-    on('data', function(doc) { volume+=doc.volume; }).
-    on('end', function() { console.log(volume);});
+  Product.find({}, function (err, product) {
+    if (err) {
+      console.log(err)
+      response.status(400)
     }
-    calc();
-  /*console.log(volume); */
-  response.render('products.hbs', {final: volume})
+    for (let obj of product){
+      volume+=obj.volume;
+    }
+    response.render('products.hbs', {final: volume})
+  })
 }
 
 exports.getProducts = function (request, response) {

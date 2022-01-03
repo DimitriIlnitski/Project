@@ -6,8 +6,6 @@ const app = express()
 
 app.use(express.static('public'))
 
-const userRouter = require('./routes/userRouter.js')
-const homeRouter = require('./routes/homeRouter.js')
 const productRouter = require('./routes/productRouter.js')
 
 app.set('view engine', 'hbs')
@@ -16,8 +14,7 @@ hbs.registerPartials(__dirname + '/views/partials')
 app.use(express.urlencoded({ extended: false }))
 
 app.use('/products', productRouter)
-app.use('/users', userRouter)
-app.use('/', homeRouter)
+app.use('/', productRouter)
 
 app.use(function (request, response, next) {
   response.status(404).send('Not found')
@@ -29,7 +26,7 @@ mongoose.connect(
   function (err) {
     if (err) return console.log(err)
     app.listen(3000, function () {
-      console.log('Server awaits for connection...')
+      console.log('Server awaits for connection at http://localhost:3000')
     })
   }
 )
